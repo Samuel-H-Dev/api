@@ -31,9 +31,9 @@ export async function addTasks(req, res){
 
 //update tasks
 export async function UpdateTask(req, res) {
-    const { dine, id } = req.body;
-
-    if(!id) {
+    const { done, id } = req.body;
+    const { uid } = req.params
+    if(!uid) {
         res.status(401).send({success: false, message: "Not a valid request"})
         return;
     }
@@ -43,7 +43,7 @@ export async function UpdateTask(req, res) {
         updatedAt: FieldValue.serverTimestamp()
     }
 
-    await coll.doc(uid).update(updates);
+    await coll.doc(id).update(updates);
 
     getTasks(req, res);
 }
