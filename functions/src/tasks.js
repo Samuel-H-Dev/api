@@ -59,5 +59,5 @@ export async function deleteTask(req, res){
 
     await coll.doc(id).delete()
 
-    getTasks
+    getTasks(req, res)
 }
