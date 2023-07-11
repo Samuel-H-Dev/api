@@ -1,10 +1,7 @@
 import { FieldValue } from "firebase-admin/firestore";
-import db from "./dbConnect";
+import db from "./dbConnect.js";
 
-const coll = db.collections("tasks")
-
-
-
+const coll = db.collection("tasks")
 
 
 export async function getTasks(req, res){
@@ -19,7 +16,7 @@ export async function getTasks(req, res){
 export async function addTasks(req, res){
     const {title, uid} = req.body
     if(!title || !uid){
-        res.status(401).send({sucess: false, message: "invalid request"})
+        res.status(401).send({success: false, message: "invalid request"})
         return;
     }
     const newTask = {
@@ -30,6 +27,25 @@ export async function addTasks(req, res){
     }
     await coll.add(newTask)
     getTasks(req,res)
+}
+
+//update tasks
+export async function UpdateTask(req, res) {
+    const { dine, id } = req.body;
+
+    if(!id) {
+        res.status(401).send({success: false, message: "Not a valid request"})
+        return;
+    }
+
+    const updates = {
+        done,
+        updatedAt: FieldValue.serverTimestamp()
+    }
+
+    await coll.doc(uid).update(updates);
+
+    getTasks(req, res);
 }
 
 
