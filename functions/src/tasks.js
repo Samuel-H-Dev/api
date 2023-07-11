@@ -49,9 +49,9 @@ export async function UpdateTask(req, res) {
 }
 
 //delete Task
-export async function deleteTask(){
+export async function deleteTask(req, res){
     const {uid} = req.params;
-    const id = req.body;
+    const { id } = req.body;
     if(!uid){
         res.status(401).send({sucess: false, message: "Not a valid request"})
         return;
